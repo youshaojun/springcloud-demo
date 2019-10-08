@@ -17,7 +17,6 @@
         <module>eureka</module>
         <module>gateway</module>
         <module>provider</module>
-        <module>tools</module>
         <module>xxl-job</module>
         <module>zipkin</module>
         <module>zuul</module>
