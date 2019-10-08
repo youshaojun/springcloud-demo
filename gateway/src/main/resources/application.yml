@@ -1,0 +1,32 @@
+server:
+ port: 8808
+spring:
+  application:
+    name: cloud-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        tags: dev
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        instance-id: cloud-gateway-id
+    gateway:
+      filter:
+        remove-non-proxy-headers:
+          headers:
+          - dummy
+      routes:
+      - id: gateway
+        # lb://cloud-consul lb表示从注册中心获取服务
+        # uri: http://localhost:8807
+        uri: lb://cloud-consul
+        predicates:
+        - Path=/gateway/**
+        filters:
+        # 1表示从/gateway开始转发
+        - StripPrefix=1
+
+
+

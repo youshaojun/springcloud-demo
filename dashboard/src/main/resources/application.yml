@@ -1,0 +1,16 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8801/eureka/
+server:
+  port: 8805
+spring:
+  application:
+    name: cloud-dashboard
+turbine:
+  aggregator:
+    cluster-config: default
+  combine-host-port: true
+  instanceUrlSuffix: /hystrix.stream
+  cluster-name-expression: "'default'"
+  app-config: cloud-consumer

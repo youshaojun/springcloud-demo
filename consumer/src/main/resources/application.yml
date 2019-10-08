@@ -1,0 +1,29 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8801/eureka/
+server:
+  port: 8803
+spring:
+  application:
+    name: cloud-consumer
+# 开启feign客户端断路器
+#feign:
+#  hystrix:
+#    enabled: true
+ribbon:
+  ReadTimeout:  30000
+  ConnectTimeout:  15000
+# 断路器超时时间
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          thread:
+#            timeoutInMilliseconds: 100000
+logging:
+  level:
+    com.fegin.consumer.rpc.SayHello: debug
+
+

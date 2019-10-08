@@ -1,0 +1,19 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8801/eureka/
+server:
+  port: 8804
+spring:
+  application:
+    name: cloud-zuul
+zuul:
+  routes:
+    cloud-consumer: /consumer/**
+    cloud-provider: /provider/**
+  host:
+    socket-timeout-millis: 60000
+    connect-timeout-millis: 30000  # http连接超时时间要比Hystrix大
+ribbon: # 配置ribbon超时时间, 注意不能比zuul超时时间大
+  ReadTimeout: 30000
+  ConnectTimeout: 30000

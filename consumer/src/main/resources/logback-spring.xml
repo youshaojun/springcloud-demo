@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <contextName>logback</contextName>
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+    <conversionRule conversionWord="wex"
+                    converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
+    <conversionRule conversionWord="wEx"
+                    converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
+    <property name="CONSOLE_LOG_PATTERN"
+              value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(-&#45;&#45;){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <!--输出到控制台-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+        <encoder>
+            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- 将日志发送到mq上, 然后通过logstash读取mq上的日志-->
+    <appender name="SEND_LOG_TO_MQ" class="net.logstash.logback.appender.LoggingEventAsyncDisruptorAppender">
+        <appender name="AMQP"
+                  class="org.springframework.amqp.rabbit.logback.AmqpAppender">
+            <host>localhost</host>
+            <port>5672</port>
+            <virtualHost>/</virtualHost>
+            <username>guest</username>
+            <password>guest</password>
+            <exchangeType>direct</exchangeType>
+            <exchangeName>elk</exchangeName>
+            <applicationId>gateway</applicationId>
+            <routingKeyPattern>elk</routingKeyPattern>
+            <contentType>text/plain</contentType>
+            <maxSenderRetries>2</maxSenderRetries>
+            <charset>UTF-8</charset>
+            <declareExchange>true</declareExchange>
+            <layout class="net.logstash.logback.layout.LogstashLayout">
+                <customFields>{"app":"lostashTest"}</customFields>
+            </layout>
+        </appender>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SEND_LOG_TO_MQ"/>
+    </root>
+</configuration>

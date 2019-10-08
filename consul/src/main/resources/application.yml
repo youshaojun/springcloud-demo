@@ -1,0 +1,16 @@
+server:
+ port: 8807
+spring:
+  application:
+    name: cloud-consul
+  cloud:
+    consul:
+      host: localhost
+      port: 8500  # 安装的本地consul端口默认8500
+      discovery:
+        tags: dev
+        health-check-path: /actuator/health  # 健康路径，也可以自己写
+        health-check-interval: 10s  # 检测轮训时间
+        instance-id: cloud-consul-id # 服务id 需要唯一
+
+

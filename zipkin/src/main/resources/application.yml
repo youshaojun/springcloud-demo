@@ -1,0 +1,18 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8801/eureka/
+server:
+  port: 9411
+spring:
+  application:
+    name: cloud-zipkin
+  zipkin:
+    base-url: http://localhost:9411
+  main:
+    allow-bean-definition-overriding: true
+management:
+  metrics:
+    web:
+      server:
+        auto-time-requests: false
