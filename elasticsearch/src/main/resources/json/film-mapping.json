@@ -1,0 +1,21 @@
+{
+  "film": {
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "name": {
+        "type": "text",
+        "analyzer": "ikSearchAnalyzer",
+        "search_analyzer": "ikSearchAnalyzer",
+        "fields": {
+          "pinyin": {
+            "type": "text",
+            "analyzer": "pinyinSimpleIndexAnalyzer",
+            "search_analyzer": "pinyinSimpleIndexAnalyzer"
+          }
+        }
+      }
+    }
+  }
+}
