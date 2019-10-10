@@ -200,6 +200,14 @@ public class TestEsController {
         return SUCCESS();
     }
 
+    /**
+     * 拼音分词
+     * 关键字高亮显示
+     * BM25相关度排序
+     *
+     * @param query
+     * @return
+     */
     @RequestMapping("/search/{query}")
     public ResultData search(@PathVariable String query) {
         HighlightBuilder highlightBuilder = new HighlightBuilder();

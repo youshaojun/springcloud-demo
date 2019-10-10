@@ -1,25 +1,32 @@
 {
   "index": {
     "analysis": {
+      // 规则
       "filter": {
+        // 拼音分词规则
+        // 拼音分词参数: https://blog.csdn.net/a1148233614/article/details/80280024
         "pinyin_simple_filter": {
-          "type" : "pinyin",
-          "keep_separate_first_letter" : false,
-          "keep_first_letter" : true,
-          "keep_full_pinyin" : true,
-          "keep_joined_full_pinyin" : true,
-          "limit_first_letter_length" : 10
+          "type": "pinyin",
+          "keep_separate_first_letter": false,
+          "keep_first_letter": true,
+          "keep_full_pinyin": true,
+          "keep_joined_full_pinyin": true,
+          "limit_first_letter_length": 10
         }
       },
+      // 字符过滤
       "char_filter": {
+        // 过滤繁体字
         "tsconvert": {
           "type": "stconvert",
           "convert_type": "t2s"
         }
       },
       "analyzer": {
+        // 中文分词
         "ikSearchAnalyzer": {
           "type": "custom",
+          // 尽可能多的分词
           "tokenizer": "ik_max_word",
           "char_filter": [
             "tsconvert"

@@ -40,7 +40,7 @@
 ## 拼音分词插件: https://github.com/medcl/elasticsearch-analysis-pinyin/releases
 ## 繁体字插件: https://github.com/medcl/elasticsearch-analysis-stconvert/releases
 ## 拼音分词参数: https://blog.csdn.net/a1148233614/article/details/80280024
-## es相关度BM25算法, 计算包含查询词的文档, 根据权重等打分, 适用于精确命中文档
+## es相关度BM25算法, 计算包含查询词的文档, 根据词频,权重等打分, 适用于精确命中文档
 ## BM25算法缺陷: 无法处理词语的语义相关性
 
 ## Logstash 日志过滤

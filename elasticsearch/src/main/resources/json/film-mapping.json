@@ -1,13 +1,20 @@
 {
+  // 索引名称
   "film": {
+    // 内容
     "properties": {
+      // 字段
       "id": {
+        // 字段类型
         "type": "long"
       },
       "name": {
         "type": "text",
+        // BM25相关度
         "similarity": "BM25",
+        // 索引分词
         "analyzer": "ikSearchAnalyzer",
+        // 查询分词
         "search_analyzer": "ikSearchAnalyzer",
         "fields": {
           "pinyin": {
