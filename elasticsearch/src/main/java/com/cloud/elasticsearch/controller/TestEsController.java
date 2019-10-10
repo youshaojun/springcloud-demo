@@ -149,8 +149,54 @@ public class TestEsController {
     }
 
     @RequestMapping("/insertFilm")
-    public Result insertFilm() {
-        filmEntityRepository.save(new FilmEntity().setId(123456L).setName("我爱你中国"));
+    public Result insertFilm() throws InterruptedException {
+        String s = "我爱你中国,我爱你中国,写代码";
+        String s1 = "我爱你中国,写bug";
+        String s2 = "我爱你,我爱你,我爱Java";
+        String s3 = "我爱你中国,我爱编程";
+        String s4 = "我爱你中国,中国";
+        String s5 = "我爱你中国,我爱吃西瓜";
+        String s6 = "我爱你中国,我爱喝营养快线";
+        String s7 = "我爱你中国,我爱学习";
+        String s8 = "我爱你中国,我爱学习知识";
+        String s9 = "我爱你中国,我是程序员,我喜欢编程";
+        for (int i = 1; i < 11; i++) {
+            FilmEntity filmEntity = new FilmEntity();
+            filmEntity.setId(123456L + i);
+            switch (i) {
+                case 1:
+                    filmEntity.setName(s);
+                    break;
+                case 2:
+                    filmEntity.setName(s1);
+                    break;
+                case 3:
+                    filmEntity.setName(s2);
+                    break;
+                case 4:
+                    filmEntity.setName(s3);
+                    break;
+                case 5:
+                    filmEntity.setName(s4);
+                    break;
+                case 6:
+                    filmEntity.setName(s5);
+                    break;
+                case 7:
+                    filmEntity.setName(s6);
+                    break;
+                case 8:
+                    filmEntity.setName(s7);
+                    break;
+                case 9:
+                    filmEntity.setName(s8);
+                    break;
+                case 10:
+                    filmEntity.setName(s9);
+                    break;
+            }
+            filmEntityRepository.save(filmEntity);
+        }
         return SUCCESS();
     }
 
@@ -165,19 +211,21 @@ public class TestEsController {
         highlightBuilder.field("name.pinyin");
         String[] fileds = {"name", "name.pinyin"};
         QueryBuilder matchQuery = QueryBuilders.multiMatchQuery(query, fileds);
-        //QueryBuilder matchQuery = QueryBuilders.matchPhraseQuery("name.pinyin", query);
         //搜索数据
         SearchResponse response = transportClient.prepareSearch("film-entity")
                 .setQuery(matchQuery)
+                .setFrom(0)
+                .setSize(5)
                 .highlighter(highlightBuilder)
                 .execute().actionGet();
         SearchHits searchHits = response.getHits();
-        System.out.println("记录数-->" + searchHits.getTotalHits());
+        System.out.println("记录数: " + searchHits.getTotalHits());
         List<FilmEntity> list = new ArrayList<>();
         for (SearchHit hit : searchHits) {
             FilmEntity entity = new FilmEntity();
             Map<String, Object> entityMap = hit.getSourceAsMap();
-            System.out.println(hit.getHighlightFields());
+            System.out.println("得分: " + hit.getScore());
+            System.out.println("数据: " + hit.getHighlightFields());
             //高亮字段
             if (!StringUtils.isEmpty(hit.getHighlightFields().get("name.pinyin"))) {
                 Text[] text = hit.getHighlightFields().get("name.pinyin").getFragments();
@@ -196,6 +244,5 @@ public class TestEsController {
         }
         return SUCCESS(list);
     }
-
 
 }

@@ -7,7 +7,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Mapping;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
-@Document(indexName = "film-entity", type = "film")
+@Document(indexName = "film-entity", type = "film", shards = 1, replicas = 0)
 @Setting(settingPath = "/json/film-setting.json")
 @Mapping(mappingPath = "/json/film-mapping.json")
 @Data

@@ -6,6 +6,7 @@
       },
       "name": {
         "type": "text",
+        "similarity": "BM25",
         "analyzer": "ikSearchAnalyzer",
         "search_analyzer": "ikSearchAnalyzer",
         "fields": {
