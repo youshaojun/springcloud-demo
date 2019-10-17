@@ -1,7 +1,7 @@
 package com.cloud.provider.service.impl;
 
 
-import com.cloud.provider.dao.UserDao;
+import com.cloud.provider.dao.dao03.UserDao03;
 import com.cloud.provider.entity.User;
 import com.cloud.provider.redis.RedisUtil;
 import com.cloud.provider.service.UserService;
@@ -24,7 +24,7 @@ import static com.cloud.provider.redis.RedisUtil.TOTAL;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserDao userDao;
+    UserDao03 userDao;
     @Autowired
     RedisUtil<User> redisUtil;
 
