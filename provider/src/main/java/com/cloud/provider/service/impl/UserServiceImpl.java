@@ -20,7 +20,6 @@ import static com.cloud.provider.redis.RedisUtil.TOTAL;
 
 @Service
 @Transactional
-@SuppressWarnings("all")
 public class UserServiceImpl implements UserService {
 
     @Autowired

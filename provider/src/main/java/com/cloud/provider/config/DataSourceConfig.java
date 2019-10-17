@@ -11,7 +11,6 @@ import java.util.Properties;
 
 
 @Configuration
-@SuppressWarnings("all")
 public class DataSourceConfig {
 
     @Autowired
