@@ -9,6 +9,9 @@ import result.Result;
 
 import static result.Result.SUCCESS;
 
+/**
+ * atomikos解决多数据源分布式事务问题
+ */
 @RestController
 public class TestDBController {
 
