@@ -30,9 +30,11 @@ public class UserServiceImpl implements UserService {
 
     // list key
     private final static String REDIS_USER_LIST_KEY = "userList";
+    // 超时时间
+    private final static long TIME_OUT = 3000L;
 
     private AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-    // list index
+    // list 索引
     private AtomicInteger atomicInteger = new AtomicInteger(0);
 
     public void add(User user) {
@@ -47,7 +49,7 @@ public class UserServiceImpl implements UserService {
         else {
             // 如果redis中没有数据, 就不添加进redis
             if (redisUtil.getSize(REDIS_USER_LIST_KEY) > 0)
-                redisUtil.addList(REDIS_USER_LIST_KEY, user, 3000);
+                redisUtil.addList(REDIS_USER_LIST_KEY, user, TIME_OUT);
         }
     }
 
@@ -95,7 +97,7 @@ public class UserServiceImpl implements UserService {
         map.put(TOTAL, total);
         users.forEach(user -> {
                     user.setIndex(atomicInteger.get());
-                    redisUtil.addList(REDIS_USER_LIST_KEY, user, 3000);
+                    redisUtil.addList(REDIS_USER_LIST_KEY, user, TIME_OUT);
                     atomicInteger.getAndIncrement();
                 }
         );

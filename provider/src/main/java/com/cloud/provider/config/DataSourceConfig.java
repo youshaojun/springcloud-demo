@@ -27,6 +27,7 @@ public class DataSourceConfig {
     private static final String RESOURCE_NAME_02 = "test02";
     private static final String RESOURCE_NAME_03 = "test03";
     private static final String XA_DATASOURCE_CLASSNAME = "com.alibaba.druid.pool.xa.DruidXADataSource";
+    private static final int POOL_SIZE = 5;
 
     @Bean(name = "dataSource01")
     public DataSource dataSource01() throws Exception {
@@ -47,7 +48,7 @@ public class DataSourceConfig {
         AtomikosDataSourceBean ds = new AtomikosDataSourceBean();
         ds.setXaDataSourceClassName(XA_DATASOURCE_CLASSNAME);
         ds.setUniqueResourceName(resourceName);
-        ds.setPoolSize(5);
+        ds.setPoolSize(POOL_SIZE);
         ds.setXaProperties(build(prefix));
         return ds;
     }
