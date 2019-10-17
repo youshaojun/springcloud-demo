@@ -16,14 +16,14 @@ spring:
     password: 123456
     driverClassName: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  application:
+        name: cloud-provider
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: com.test.redisdemo.entity
 logging:
   level:
     com.test.redisdemo.dao: debug
-  application:
-    name: cloud-provider
 hystrix:
   command:
     default:
