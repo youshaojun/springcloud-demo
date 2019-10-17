@@ -22,12 +22,12 @@ spring:
       password: 123456
       driverClassName: com.mysql.cj.jdbc.Driver
     test03:
-          url: jdbc:mysql://localhost:3306/test_redis?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
-          username: root
-          password: 123456
-          driverClassName: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/test_redis?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+      username: root
+      password: 123456
+      driverClassName: com.mysql.cj.jdbc.Driver
   application:
-        name: cloud-provider
+     name: cloud-provider
 logging:
   level:
     com.cloud.provider.dao: debug
