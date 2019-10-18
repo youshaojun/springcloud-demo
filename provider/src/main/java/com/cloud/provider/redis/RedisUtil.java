@@ -68,8 +68,8 @@ public class RedisUtil<T> {
     public Map getListPage(String key, int start, int end) {
         Map map = new HashMap();
         Long size = redisTemplate.opsForList().size(key);
-        map.put(TOTAL, size == 0 ? null : size);
-        map.put(ROWS, redisTemplate.opsForList().range(key, (start - 1) * end, start * end - 1));
+        map.put(TOTAL, size == ZERO ? null : size);
+        map.put(ROWS, redisTemplate.opsForList().range(key, (start - ONE) * end, start * end - ONE));
         return map;
     }
 
@@ -112,7 +112,7 @@ public class RedisUtil<T> {
      * @param timeOut
      */
     public void expire(String key, long timeOut) {
-        redisTemplate.expire(key, timeOut, TimeUnit.SECONDS);
+        redisTemplate.expire(key, timeOut, TIME_UNIT);
     }
 
 }
