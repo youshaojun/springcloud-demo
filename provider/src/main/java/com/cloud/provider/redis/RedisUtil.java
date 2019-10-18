@@ -12,44 +12,17 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Component
-@SuppressWarnings("all")
 public class RedisUtil<T> {
 
     @Autowired
     StringRedisTemplate stringRedisTemplate;
-    @Resource(name = "stringRedisTemplate")
-    ValueOperations<String, String> valOpsStr;
     @Autowired
     RedisTemplate<Object, Object> redisTemplate;
-    @Resource(name = "redisTemplate")
-    ValueOperations<Object, Object> valOpsObj;
 
     // 总记录数
     public final static String TOTAL = "total";
     // 分页数据集合
     public final static String ROWS = "rows";
-
-
-    /**
-     * 根据指定key获取String
-     *
-     * @param key
-     * @return
-     */
-    public String getStr(String key) {
-        return valOpsStr.get(key);
-    }
-
-    /**
-     * 设置Str缓存
-     *
-     * @param key
-     * @param val
-     */
-    public void setStr(String key, String val) {
-        valOpsStr.set(key, val);
-
-    }
 
     /**
      * 删除指定key
@@ -62,27 +35,6 @@ public class RedisUtil<T> {
     }
 
     /**
-     * 根据指定o获取Object
-     *
-     * @param o
-     * @return
-     */
-    public Object getObj(Object o) {
-        return valOpsObj.get(o);
-
-    }
-
-    /**
-     * 设置obj缓存
-     *
-     * @param key
-     * @param value
-     */
-    public void setObj(Object key, Object value) {
-        valOpsObj.set(key, value);
-    }
-
-    /**
      * 删除Obj缓存
      *
      * @param o
@@ -90,7 +42,6 @@ public class RedisUtil<T> {
     public void delObj(Object o) {
         redisTemplate.delete(o);
     }
-
 
     /**
      * 添加对象到redis 里面的list中
@@ -103,9 +54,9 @@ public class RedisUtil<T> {
      */
     public void addList(String key, Object obj, long timeOut) {
         redisTemplate.opsForList().rightPush(key, obj);
+        // 这里设置过期时间不是原子操作, 存在失败的风险
         expire(key, timeOut);
     }
-
 
     /**
      * opsForList().range(key, start, end);  取范围值  redis里面的list下标从0开始

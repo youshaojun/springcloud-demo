@@ -29,34 +29,39 @@ public class UserServiceImpl implements UserService {
 
     // list key
     private final static String REDIS_USER_LIST_KEY = "userList";
+    private final static String USERS_KEY = "users";
+    private final static String ADD_ERROR = "添加失败";
+    private final static String MODIFY_ERROR = "修改失败";
+    private final static String TIME_UNIT = "ms";
+    private final static int ZERO = 0;
+    private final static int ONE = 1;
     // 超时时间
-    private final static long TIME_OUT = 3000L;
-
+    private final static long TIME_OUT = 30L;
     private AtomicBoolean atomicBoolean = new AtomicBoolean(false);
     // list 索引
-    private AtomicInteger atomicInteger = new AtomicInteger(0);
+    private AtomicInteger atomicInteger = new AtomicInteger(ZERO);
 
     public void add(User user) {
         int increment = atomicInteger.getAndIncrement();
         user.setIndex(increment);
         int i = userDao.add(user);
-        if (i <= 0)
-            throw new RuntimeException("添加失败");
-        if (increment == 0)
+        if (i <= ZERO)
+            throw new RuntimeException(ADD_ERROR);
+        if (increment == ZERO)
             // 服务端重启, atomicInteger重置, 需要重新排序, 直接将list设置过期
-            redisUtil.expire(REDIS_USER_LIST_KEY, 0);
+            redisUtil.expire(REDIS_USER_LIST_KEY, ZERO);
         else {
             // 如果redis中没有数据, 就不添加进redis
-            if (redisUtil.getSize(REDIS_USER_LIST_KEY) > 0)
+            if (redisUtil.getSize(REDIS_USER_LIST_KEY) > ZERO)
                 redisUtil.addList(REDIS_USER_LIST_KEY, user, TIME_OUT);
         }
     }
 
     public void modify(User user) {
         int i = userDao.modify(user);
-        if (i <= 0)
-            throw new RuntimeException("修改失败");
-        if (redisUtil.getSize(REDIS_USER_LIST_KEY) > 0)
+        if (i <= ZERO)
+            throw new RuntimeException(MODIFY_ERROR);
+        if (redisUtil.getSize(REDIS_USER_LIST_KEY) > ZERO)
             redisUtil.modifyList(REDIS_USER_LIST_KEY, user.getIndex(), user);
     }
 
@@ -71,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
     public List<User> selectAll() {
         List<User> users = userDao.selectAll();
-        redisUtil.setObj("users", users);
+        redisUtil.addList(USERS_KEY, users, TIME_OUT);
         return users;
     }
 
@@ -80,7 +85,7 @@ public class UserServiceImpl implements UserService {
         Map map = redisUtil.getListPage(REDIS_USER_LIST_KEY, page, size);
         if (map.get(TOTAL) == null) {
             // list过期重置index
-            atomicInteger.set(0);
+            atomicInteger.set(ZERO);
             selectBysql(page, size, startTime, map);
             return map;
         }
@@ -102,20 +107,19 @@ public class UserServiceImpl implements UserService {
         );
         int end = page * size;
         if (end > total)
-            map.put(ROWS, users.subList((page - 1) * size, total));
+            map.put(ROWS, users.subList((page - ONE) * size, total));
         else {
-            map.put(ROWS, users.subList((page - 1) * size, end));
+            map.put(ROWS, users.subList((page - ONE) * size, end));
         }
         long endTimeBySQL = System.currentTimeMillis();
         if (atomicBoolean.get()) {
             System.err.println("redis中暂无数据, mybatis一级缓存有数据.......");
-            System.err.println("使用mybatis一级缓存查询所消耗时间为 :  " + (endTimeBySQL - startTime) + "ms");
+            System.err.println("使用mybatis一级缓存查询所消耗时间为 :  " + (endTimeBySQL - startTime) + TIME_UNIT);
         } else {
             System.err.println("redis中暂无数据, mybatis一级缓存暂无数据, 进入mysql查询.......");
-            System.err.println("使用mysql查询所消耗时间为 :  " + (endTimeBySQL - startTime) + "ms");
+            System.err.println("使用mysql查询所消耗时间为 :  " + (endTimeBySQL - startTime) + TIME_UNIT);
             atomicBoolean.set(true);
         }
-
     }
 
 }
