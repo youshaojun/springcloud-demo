@@ -14,9 +14,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.cloud.provider.redis.RedisUtil.ROWS;
-import static com.cloud.provider.redis.RedisUtil.TOTAL;
-
+import static constants.Constants.*;
 
 @Service
 @Transactional
@@ -27,16 +25,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     RedisUtil<User> redisUtil;
 
-    // list key
-    private final static String REDIS_USER_LIST_KEY = "userList";
-    private final static String USERS_KEY = "users";
-    private final static String ADD_ERROR = "添加失败";
-    private final static String MODIFY_ERROR = "修改失败";
-    private final static String TIME_UNIT = "ms";
-    private final static int ZERO = 0;
-    private final static int ONE = 1;
-    // 超时时间
-    private final static long TIME_OUT = 30L;
+
     private AtomicBoolean atomicBoolean = new AtomicBoolean(false);
     // list 索引
     private AtomicInteger atomicInteger = new AtomicInteger(ZERO);
@@ -114,10 +103,10 @@ public class UserServiceImpl implements UserService {
         long endTimeBySQL = System.currentTimeMillis();
         if (atomicBoolean.get()) {
             System.err.println("redis中暂无数据, mybatis一级缓存有数据.......");
-            System.err.println("使用mybatis一级缓存查询所消耗时间为 :  " + (endTimeBySQL - startTime) + TIME_UNIT);
+            System.err.println("使用mybatis一级缓存查询所消耗时间为 :  " + (endTimeBySQL - startTime) + "ms");
         } else {
             System.err.println("redis中暂无数据, mybatis一级缓存暂无数据, 进入mysql查询.......");
-            System.err.println("使用mysql查询所消耗时间为 :  " + (endTimeBySQL - startTime) + TIME_UNIT);
+            System.err.println("使用mysql查询所消耗时间为 :  " + (endTimeBySQL - startTime) + "ms");
             atomicBoolean.set(true);
         }
     }

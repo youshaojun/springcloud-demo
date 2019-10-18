@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static constants.Constants.*;
+
 @Component
 public class RedisUtil<T> {
 
@@ -18,11 +20,6 @@ public class RedisUtil<T> {
     StringRedisTemplate stringRedisTemplate;
     @Autowired
     RedisTemplate<Object, Object> redisTemplate;
-
-    // 总记录数
-    public final static String TOTAL = "total";
-    // 分页数据集合
-    public final static String ROWS = "rows";
 
     /**
      * 删除指定key

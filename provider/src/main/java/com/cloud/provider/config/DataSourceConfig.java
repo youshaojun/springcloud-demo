@@ -8,25 +8,14 @@ import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 import java.util.Properties;
-
+import static constants.Constants.*;
 
 @Configuration
 public class DataSourceConfig {
 
     @Autowired
     private Environment env;
-    private static final String URL = "url";
-    private static final String USERNAME = "username";
-    private static final String PASSWORD = "password";
-    private static final String DRIVER_CLASSNAME = "driverClassName";
-    private static final String PREFIX_01 = "spring.datasource.test01.";
-    private static final String PREFIX_02 = "spring.datasource.test02.";
-    private static final String PREFIX_03 = "spring.datasource.test03.";
-    private static final String RESOURCE_NAME_01 = "test01";
-    private static final String RESOURCE_NAME_02 = "test02";
-    private static final String RESOURCE_NAME_03 = "test03";
-    private static final String XA_DATASOURCE_CLASSNAME = "com.alibaba.druid.pool.xa.DruidXADataSource";
-    private static final int POOL_SIZE = 5;
+
 
     @Bean(name = "dataSource01")
     public DataSource dataSource01() throws Exception {

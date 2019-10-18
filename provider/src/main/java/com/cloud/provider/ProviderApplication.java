@@ -9,12 +9,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 
+import static constants.Constants.MAPPERSCAN_BASEPACKAGES;
+
 /**
  * api服务生产者
  */
 @SpringBootApplication
 @EnableHystrix
-@MapperScan("com.cloud.provider.dao")
+@MapperScan(MAPPERSCAN_BASEPACKAGES)
 public class ProviderApplication {
 
     public static void main(String[] args) {

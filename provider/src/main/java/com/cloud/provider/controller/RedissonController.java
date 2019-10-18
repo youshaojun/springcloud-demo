@@ -5,13 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static constants.Constants.REDIS_KEY;
+
 /**
  * redisson实现redis分布式锁
  */
 @RestController
 public class RedissonController {
-
-    private static String REDIS_KEY = "test";
 
     @Autowired
     RedissonUtil redissonUtil;

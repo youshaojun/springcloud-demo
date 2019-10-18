@@ -13,8 +13,10 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
 
+import static constants.Constants.*;
+
 @Configuration
-@MapperScan(basePackages = "com.cloud.provider.dao.dao03",
+@MapperScan(basePackages = MAPPERSCAN_BASEPACKAGES_03,
         sqlSessionTemplateRef = "sqlSessionTemplateRef03")
 public class MybatisConfig03 {
 
@@ -26,8 +28,8 @@ public class MybatisConfig03 {
     public SqlSessionFactory sqlSessionFactory03() throws Exception {
         SqlSessionFactoryBean fb = new SqlSessionFactoryBean();
         fb.setDataSource(dataSource03);
-        fb.setTypeAliasesPackage("com.cloud.provider.entity");
-        fb.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper03/*.xml"));
+        fb.setTypeAliasesPackage(TYPE_ALIASES_PACKAGE);
+        fb.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATIONS_01));
         return fb.getObject();
     }
 

@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
-
+import static constants.Constants.*;
 @Configuration
-@MapperScan(basePackages = "com.cloud.provider.dao.dao01",
+@MapperScan(basePackages = MAPPERSCAN_BASEPACKAGES_01,
         sqlSessionTemplateRef = "sqlSessionTemplateRef01")
 public class MybatisConfig01 {
 
@@ -27,8 +27,8 @@ public class MybatisConfig01 {
     public SqlSessionFactory sqlSessionFactory01() throws Exception {
         SqlSessionFactoryBean fb = new SqlSessionFactoryBean();
         fb.setDataSource(dataSource01);
-        fb.setTypeAliasesPackage("com.cloud.provider.entity");
-        fb.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mapper01/*.xml"));
+        fb.setTypeAliasesPackage(TYPE_ALIASES_PACKAGE);
+        fb.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(MAPPER_LOCATIONS_01));
         return fb.getObject();
     }
 

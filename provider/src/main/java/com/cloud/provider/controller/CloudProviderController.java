@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import static constants.Constants.FALL_BACK_MSG;
+
 @RestController
 @RequestMapping("/test")
 @Slf4j
@@ -17,7 +19,7 @@ public class CloudProviderController {
     @Value("${server.port}")
     String port;
 
-    private static final String FALL_BACK_MSG = "服务器开小差啦";
+
 
     @RequestMapping("/provider")
     @HystrixCommand(fallbackMethod = "fallback")

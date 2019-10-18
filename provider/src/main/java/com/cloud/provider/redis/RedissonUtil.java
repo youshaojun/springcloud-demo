@@ -8,19 +8,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
+import static constants.Constants.*;
+
+
 @Component
 public class RedissonUtil {
 
     @Autowired
     Redisson redisson;
-    // 拼接key前缀
-    private static final String LOCK_TITLE = "redisLock_";
-    // 获取锁的等待时间, 若在此时间内没有获取到则直接返回
-    private static final long WAIT_TIME = 1L;
-    // 锁失效时间
-    private static final long TIME_OUT = 10L;
-    // 时间单位
-    private static final TimeUnit TIME_UNIT = TimeUnit.SECONDS;
+
 
     // 获取锁 + 等待时间 + 超时时间
     public boolean tryLock(String lockName) throws InterruptedException {
