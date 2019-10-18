@@ -18,6 +18,7 @@ import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.FSDirectory;
+import org.wltea.analyzer.lucene.IKAnalyzer;
 
 @Data
 @AllArgsConstructor
@@ -64,6 +65,9 @@ public class Article {
     // 索引文档存放目录
     private static String indexPath = "D:\\data\\testluncene\\index";
 
+    // ik中文分词器 userSmart = true 表示尽可能少的分词
+    private static Analyzer analyzer = new IKAnalyzer(true);
+
     /**
      * 新增
      *
@@ -78,9 +82,6 @@ public class Article {
         article.setContent("lucene,单机程序！");
         article.setUrl("http://www.baidu.com");
         FSDirectory fsDirectory = FSDirectory.open(Paths.get(indexPath));
-        // 创建一个标准分词器，一个字分一次 无法分中文 例如：“老师”会分成“老”“师”
-        Analyzer analyzer = new StandardAnalyzer();
-        // Analyzer analyzer = new IKAnalyzer(true);
         // 写入索引的配置，设置了分词器
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
         // 指定了写入数据目录和配置
@@ -108,7 +109,6 @@ public class Article {
      * @throws Exception
      */
     public static void delete() throws Exception {
-        Analyzer analyzer = new StandardAnalyzer();
         FSDirectory fsDirectory = FSDirectory.open(Paths.get(indexPath));
         IndexWriterConfig indexWriterConfig = new IndexWriterConfig(analyzer);
         IndexWriter indexWriter = new IndexWriter(fsDirectory, indexWriterConfig);
@@ -133,9 +133,6 @@ public class Article {
      * @throws Exception
      */
     public static void search(String queryStr) throws Exception {
-        // 读跟写要用相同的分词器
-        Analyzer analyzer = new StandardAnalyzer();
-        // Analyzer analyzer = new IKAnalyzer(true);
         DirectoryReader directoryReader = DirectoryReader.open(FSDirectory.open(Paths.get(indexPath)));
         // 索引查询器
         IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
@@ -160,7 +157,6 @@ public class Article {
      * @throws Exception
      */
     public void multiField() throws Exception {
-        Analyzer analyzer = new StandardAnalyzer();
         DirectoryReader directoryReader = DirectoryReader.open(FSDirectory.open(Paths.get(indexPath)));
         IndexSearcher indexSearcher = new IndexSearcher(directoryReader);
         //多字段数组

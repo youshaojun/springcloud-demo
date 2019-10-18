@@ -13,11 +13,23 @@
             <artifactId>lucene-core</artifactId>
             <version>6.6.0</version>
         </dependency>
-        <!-- lucene的分词器，有标准的英文相关的分词器，没有中文的 -->
+        <!-- lucene的分词器，适用于英文 -->
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-analyzers-common</artifactId>
             <version>6.6.0</version>
+        </dependency>
+        <!-- smartcn中文分词器 -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-smartcn</artifactId>
+            <version>6.6.0</version>
+        </dependency>
+        <!-- ik中文分词器 -->
+        <dependency>
+            <groupId>cn.bestwu</groupId>
+            <artifactId>ik-analyzers</artifactId>
+            <version>5.1.0</version>
         </dependency>
         <!-- 查询解析器 -->
         <dependency>
