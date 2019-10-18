@@ -2,6 +2,9 @@ package demo;
 
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -246,15 +249,19 @@ public class Article {
      *
      * @param scoreDocs
      * @param indexSearcher
-     * @throws IOException
      */
-    public static void forech(ScoreDoc[] scoreDocs, IndexSearcher indexSearcher) throws IOException {
-        for (ScoreDoc scoreDoc : scoreDocs) {
+    public static void forech(ScoreDoc[] scoreDocs, IndexSearcher indexSearcher) {
+        Arrays.stream(scoreDocs).forEach(scoreDoc -> {
             int doc = scoreDoc.doc;
-            Document document = indexSearcher.doc(doc);
+            Document document = null;
+            try {
+                document = indexSearcher.doc(doc);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Article article = Article.parseArticle(document);
             System.out.println(article);
-        }
+        });
     }
 
     /**
