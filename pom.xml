@@ -19,7 +19,7 @@
         <module>xxl-job</module>
         <module>zipkin</module>
         <module>zuul</module>
-        <module>luncene</module>
+        <module>lucene</module>
     </modules>
     <build>
         <plugins>
