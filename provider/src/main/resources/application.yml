@@ -38,4 +38,6 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 5000
+# 定时任务配置, 默认同步
+IS_SYNC: false
 
