@@ -10,6 +10,7 @@ spring:
     port: 6379
     timeout: 30000
     host: 127.0.0.1
+    password: 123456
   datasource:
     test01:
       url: jdbc:mysql://localhost:3306/test01?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=true
@@ -42,9 +43,7 @@ hystrix:
 IS_SYNC: false
 # 缓存
 # value和失效时间分隔符
-myCache:
-  separator: #
+myCache.separator: #
 # 自定义缓存失效时间扫包范围
-myCache:
-  packageName: com.testalipay.demo
+myCache.packageName: com.testalipay.demo
 
