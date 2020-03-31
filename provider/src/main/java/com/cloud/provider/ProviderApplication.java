@@ -6,6 +6,7 @@ import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 
@@ -17,6 +18,7 @@ import static constants.Constants.MAPPERSCAN_BASEPACKAGES;
 @SpringBootApplication
 @EnableHystrix
 @MapperScan(MAPPERSCAN_BASEPACKAGES)
+@EnableCaching
 public class ProviderApplication {
 
     public static void main(String[] args) {

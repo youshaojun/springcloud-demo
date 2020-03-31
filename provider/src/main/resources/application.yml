@@ -40,4 +40,11 @@ hystrix:
             timeoutInMilliseconds: 5000
 # 定时任务配置, 默认同步
 IS_SYNC: false
+# 缓存
+# value和失效时间分隔符
+myCache:
+  separator: #
+# 自定义缓存失效时间扫包范围
+myCache:
+  packageName: com.testalipay.demo
 
